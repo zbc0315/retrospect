@@ -15,10 +15,24 @@ When invoked, this skill:
 | `FEEDBACK_TO_HUMAN.md` | Critique of the user's prompting — round-by-round analysis, responsibility attribution when things go wrong, prompting pattern review, and actionable suggestions |
 | `FEEDBACK_TO_LLM.md` | Self-critique of the LLM — mistakes made, root cause analysis, counter-intuitive learnings, and self-improvement notes |
 
-## Trigger phrases
+## Usage
 
-- `复盘` / `retrospect` / `session review`
-- `批评与自我批评`
+### In Claude Code
+
+Type `/retrospect` in the prompt to invoke. You can optionally pass a session ID:
+
+```
+/retrospect
+/retrospect 3e67bdb8
+```
+
+Claude will also auto-invoke this skill when you say things like "复盘", "review this session", or "批评与自我批评".
+
+### In other tools
+
+Use the trigger phrases directly in your prompt:
+
+- `复盘` / `retrospect` / `session review` / `批评与自我批评`
 - "review this session"
 - "how did I do with my prompts?"
 - "what mistakes did you make?"
@@ -28,12 +42,17 @@ When invoked, this skill:
 ### Claude Code
 
 ```bash
-# Option 1: ClawHub (recommended)
+# Option 1: ClawHub (third-party skill registry)
 clawhub install retrospect
 
-# Option 2: Manual
+# Option 2: Git clone (personal scope — applies to all your projects)
 git clone https://github.com/zbc0315/retrospect.git ~/.claude/skills/retrospect
+
+# Option 3: Git clone (project scope — only this project)
+git clone https://github.com/zbc0315/retrospect.git .claude/skills/retrospect
 ```
+
+After installation, restart Claude Code or start a new session. The skill appears in the `/` slash command menu as `/retrospect`.
 
 ### Codex (OpenAI)
 
@@ -41,7 +60,7 @@ git clone https://github.com/zbc0315/retrospect.git ~/.claude/skills/retrospect
 # Option 1: ClawHub
 clawhub install retrospect --dir ~/.codex/skills
 
-# Option 2: Manual
+# Option 2: Git clone
 git clone https://github.com/zbc0315/retrospect.git ~/.codex/skills/retrospect
 ```
 
@@ -51,7 +70,7 @@ git clone https://github.com/zbc0315/retrospect.git ~/.codex/skills/retrospect
 # Option 1: ClawHub
 clawhub install retrospect --dir ~/.config/opencode/skills
 
-# Option 2: Manual — OpenCode also reads from ~/.claude/skills/
+# Option 2: Git clone (OpenCode also reads from ~/.claude/skills/)
 git clone https://github.com/zbc0315/retrospect.git ~/.config/opencode/skills/retrospect
 ```
 
@@ -61,20 +80,34 @@ git clone https://github.com/zbc0315/retrospect.git ~/.config/opencode/skills/re
 clawhub install retrospect
 ```
 
+> **Note:** [ClawHub](https://clawhub.ai) is a third-party, open-source skill registry — not an official Anthropic product. It works with Claude Code, Codex, OpenCode, and other compatible tools.
+
 ## Requirements
 
-- **Python 3** (for the JSONL parser script)
-- No external Python packages needed — uses only the standard library
+- **Python 3** (for the JSONL parser script — uses only the standard library, no pip install needed)
 
 ## How it works
 
-The skill bundles a Python parser (`scripts/parse_session.py`) that converts session JSONL files into readable Markdown transcripts. It auto-detects the JSONL format:
+```
+/retrospect
+    │
+    ├─ 1. Find session JSONL file
+    │     (auto-detects Claude Code / Codex / OpenCode format)
+    │
+    ├─ 2. Run parse_session.py → Markdown transcript
+    │
+    ├─ 3. Spawn analysis subagent with transcript
+    │
+    └─ 4. Write FEEDBACK_TO_HUMAN.md + FEEDBACK_TO_LLM.md
+```
 
-- **Claude Code**: `~/.claude/projects/<path>/<session-id>.jsonl`
-- **Codex**: `~/.codex/sessions/*.jsonl`
-- **OpenCode**: `~/.local/share/opencode/sessions/*.jsonl` or `~/Library/Application Support/opencode/sessions/*.jsonl`
+The skill bundles a Python parser (`scripts/parse_session.py`) that converts session JSONL files into readable Markdown transcripts. Supported transcript locations:
 
-The parsed transcript is then passed to an analysis subagent that writes both feedback files.
+| Tool | Path |
+|------|------|
+| Claude Code | `~/.claude/projects/<path>/<session-id>.jsonl` |
+| Codex | `~/.codex/sessions/*.jsonl` |
+| OpenCode | `~/.local/share/opencode/sessions/*.jsonl` (Linux) / `~/Library/Application Support/opencode/sessions/*.jsonl` (macOS) |
 
 ## Example output
 
@@ -96,8 +129,8 @@ The parsed transcript is then passed to an analysis subagent that writes both fe
 
 ### 1. macOS 上 Python 环境管理
 - **直觉假设**: 可以直接 `pip install` 安装 Python 包。
-- **实际情况**: macOS 的 Python 是 externally-managed-environment，不允许直接 pip install。
-  必须先创建 venv。
+- **实际情况**: macOS 的 Python 是 externally-managed-environment，
+  不允许直接 pip install。必须先创建 venv。
 ```
 
 ## License

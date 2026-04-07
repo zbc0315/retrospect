@@ -1,6 +1,7 @@
 ---
 name: retrospect
 description: "Session retrospective that analyzes conversation history to produce structured feedback for both user and LLM. Use this skill whenever the user says '复盘', 'retrospect', '批评与自我批评', 'session review', 'review this session', or asks to review/reflect on how a conversation went. Also trigger when the user wants feedback on their prompting skills, wants the LLM to self-critique its mistakes, or asks for a post-mortem of the current or a past session."
+argument-hint: "[session-id or date, optional]"
 version: 1.0.0
 metadata:
   openclaw:
@@ -50,7 +51,7 @@ ls -t ~/.local/share/opencode/sessions/*.jsonl 2>/dev/null || ls -t ~/Library/Ap
 Run the bundled parser to extract the conversation into a readable Markdown format:
 
 ```bash
-python3 <skill-dir>/scripts/parse_session.py <path-to-jsonl> > /tmp/session_transcript.md
+python3 ${CLAUDE_SKILL_DIR}/scripts/parse_session.py <path-to-jsonl> > /tmp/session_transcript.md
 ```
 
 The parser handles multiple JSONL formats (Claude Code, Codex, OpenCode) automatically. It extracts user messages, assistant responses, and tool usage into a clean turn-by-turn transcript.
