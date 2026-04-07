@@ -19,11 +19,10 @@ When invoked, this skill:
 
 ### In Claude Code
 
-Type `/retrospect` in the prompt to invoke. You can optionally pass a session ID:
+Type `/retrospect` in the prompt. It automatically finds and analyzes **all** conversation sessions for the current project — no session ID needed.
 
 ```
 /retrospect
-/retrospect 3e67bdb8
 ```
 
 Claude will also auto-invoke this skill when you say things like "复盘", "review this session", or "批评与自我批评".
@@ -107,10 +106,11 @@ clawhub install retrospect
 ```
 /retrospect
     │
-    ├─ 1. Find session JSONL file
-    │     (auto-detects Claude Code / Codex / OpenCode format)
+    ├─ 1. Auto-discover ALL session JSONL files for the current project
+    │     (Claude Code / Codex / OpenCode — no session ID needed)
     │
-    ├─ 2. Run parse_session.py → Markdown transcript
+    ├─ 2. Run parse_session.py → merged Markdown transcript
+    │     (older sessions summarized, recent sessions in full detail)
     │
     ├─ 3. Spawn analysis subagent with transcript
     │
