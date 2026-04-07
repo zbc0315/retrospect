@@ -1,0 +1,5 @@
+{
+  "name": "retrospect",
+  "description": "Session retrospective that analyzes conversation history to produce structured critique & self-critique feedback",
+  "version": "1.0.0"
+}

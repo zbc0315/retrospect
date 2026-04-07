@@ -39,42 +39,58 @@ Use the trigger phrases directly in your prompt:
 
 ## Installation
 
-### Claude Code
+### Claude Code (Marketplace)
+
+This repo doubles as a plugin marketplace, so you can install via the official plugin system:
 
 ```bash
-# Option 1: ClawHub (third-party skill registry)
-clawhub install retrospect
+# Step 1: Add this repo as a marketplace
+claude plugin marketplace add zbc0315/retrospect
 
-# Option 2: Git clone (personal scope — applies to all your projects)
-git clone https://github.com/zbc0315/retrospect.git ~/.claude/skills/retrospect
-
-# Option 3: Git clone (project scope — only this project)
-git clone https://github.com/zbc0315/retrospect.git .claude/skills/retrospect
+# Step 2: Install the plugin
+claude plugin install retrospect@retrospect-marketplace
 ```
 
-After installation, restart Claude Code or start a new session. The skill appears in the `/` slash command menu as `/retrospect`.
+Or via the interactive prompt:
+
+```
+/plugin marketplace add zbc0315/retrospect
+/plugin install retrospect@retrospect-marketplace
+```
+
+After installation, `/retrospect` appears in the slash command menu.
+
+### Claude Code (Manual)
+
+If you prefer a simpler approach, clone directly to the skills directory:
+
+```bash
+# Personal scope (all your projects)
+git clone https://github.com/zbc0315/retrospect.git /tmp/retrospect-skill \
+  && cp -r /tmp/retrospect-skill/skills/retrospect ~/.claude/skills/retrospect
+
+# Project scope (current project only)
+mkdir -p .claude/skills
+git clone https://github.com/zbc0315/retrospect.git /tmp/retrospect-skill \
+  && cp -r /tmp/retrospect-skill/skills/retrospect .claude/skills/retrospect
+```
 
 ### Codex (OpenAI)
 
 ```bash
-# Option 1: ClawHub
-clawhub install retrospect --dir ~/.codex/skills
-
-# Option 2: Git clone
-git clone https://github.com/zbc0315/retrospect.git ~/.codex/skills/retrospect
+git clone https://github.com/zbc0315/retrospect.git /tmp/retrospect-skill \
+  && cp -r /tmp/retrospect-skill/skills/retrospect ~/.codex/skills/retrospect
 ```
 
 ### OpenCode
 
 ```bash
-# Option 1: ClawHub
-clawhub install retrospect --dir ~/.config/opencode/skills
-
-# Option 2: Git clone (OpenCode also reads from ~/.claude/skills/)
-git clone https://github.com/zbc0315/retrospect.git ~/.config/opencode/skills/retrospect
+# OpenCode also reads from ~/.claude/skills/
+git clone https://github.com/zbc0315/retrospect.git /tmp/retrospect-skill \
+  && cp -r /tmp/retrospect-skill/skills/retrospect ~/.config/opencode/skills/retrospect
 ```
 
-### OpenClaw
+### ClawHub (third-party registry)
 
 ```bash
 clawhub install retrospect

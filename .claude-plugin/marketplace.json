@@ -1,0 +1,18 @@
+{
+  "name": "retrospect-marketplace",
+  "owner": {
+    "name": "zbc0315"
+  },
+  "metadata": {
+    "description": "Session retrospective skill for AI coding assistants"
+  },
+  "plugins": [
+    {
+      "name": "retrospect",
+      "source": "./",
+      "description": "Session retrospective: critique & self-critique from conversation history",
+      "version": "1.0.0",
+      "strict": false
+    }
+  ]
+}
