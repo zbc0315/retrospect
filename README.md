@@ -99,7 +99,7 @@ clawhub install retrospect
 
 ## Requirements
 
-- **Python 3** (for the JSONL parser script — uses only the standard library, no pip install needed)
+- **Node.js** (for the JSONL parser script — uses only built-in modules, no npm install needed)
 
 ## How it works
 
@@ -117,7 +117,7 @@ clawhub install retrospect
     └─ 4. Write FEEDBACK_TO_HUMAN.md + FEEDBACK_TO_LLM.md
 ```
 
-The skill bundles a Python parser (`scripts/parse_session.py`) that converts session JSONL files into readable Markdown transcripts. Supported transcript locations:
+The skill bundles a Node.js parser (`scripts/parse_session.js`) that converts session JSONL files into readable Markdown transcripts. Supported transcript locations:
 
 | Tool | Path |
 |------|------|

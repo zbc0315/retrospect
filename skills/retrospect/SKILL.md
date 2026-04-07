@@ -6,7 +6,7 @@ metadata:
   openclaw:
     requires:
       bins:
-        - python3
+        - node
 ---
 
 # Retrospect — Session Retrospective: Critique & Self-Critique
@@ -21,7 +21,7 @@ Perform a structured retrospective on all conversation sessions in the current p
 Run the bundled parser, passing the current working directory. It will automatically find all session JSONL files for this project, merge them in chronological order, and output a unified transcript.
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/scripts/parse_session.py --project-dir "$(pwd)" > /tmp/session_transcript.md
+node ${CLAUDE_SKILL_DIR}/scripts/parse_session.js --project-dir "$(pwd)" > /tmp/session_transcript.md
 ```
 
 The parser:
